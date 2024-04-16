@@ -6,7 +6,8 @@ export async function GET(){
 const response = await fetch(`http://52.66.71.14:8080/api/dns?timestamp=${timestamp}`,{
   headers: {
     'Cache-Control': 'no-cache', // Add cache-control header to prevent caching
-  }
+  },
+  cache: 'no-store'
 });
 
 
