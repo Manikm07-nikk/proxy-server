@@ -6,14 +6,16 @@ export async function PUT(req) {
     const url = new URL(req.url);
     const searchParams = new URLSearchParams(url.search);
     const domain = searchParams.get("domain");
-    const type = searchParams.get("type");
-    const values = searchParams.get("values");
+    const data = await req.json();
+    const type = data.type;
+    const value = data.value;
+    
 
     // Validate parameters (optional)
     console.log(domain);
 
     // Construct the external API request URL with parameters
-    const external_link = `http://52.66.71.14:8080/api/dns/update/${domain}?type=${type}&values=${values}`;
+    const external_link = `http://52.66.71.14:8080/api/dns/update/${domain}`;
 
     // Perform the PUT request (no need for body if data is in URL)
     const response = await fetch(external_link, {
@@ -21,6 +23,10 @@ export async function PUT(req) {
       headers: {
         "Content-Type": "application/json", // Might be required by the external API (check documentation)
       },
+      body: JSON.stringify({ // Assuming external API expects data in request bod
+        type,
+        value,
+      }),
     });
 
     if (response.ok) {
