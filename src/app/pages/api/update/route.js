@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export  async function PUT(req) {
-  
-
+export async function PUT(req) {
   try {
     // Access URL parameters from req.query
     const url = new URL(req.url);
@@ -14,15 +12,15 @@ export  async function PUT(req) {
     // Validate parameters (optional)
     console.log(domain);
 
-    // Construct the external API request URL
+    // Construct the external API request URL with parameters
     const external_link = `http://52.66.71.14:8080/api/dns/update/${domain}?type=${type}&values=${values}`;
 
-    // Perform the DELETE request with JSON data
+    // Perform the PUT request (no need for body if data is in URL)
     const response = await fetch(external_link, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
-      }
+        "Content-Type": "application/json", // Might be required by the external API (check documentation)
+      },
     });
 
     if (response.ok) {
